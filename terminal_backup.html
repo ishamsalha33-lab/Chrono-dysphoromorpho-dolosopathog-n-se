@@ -34,7 +34,7 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            
+            justify-content: flex-end;
             padding-bottom: 20px;
         }
         .line {
@@ -61,7 +61,7 @@
             align-items: center;
             flex-shrink: 0;
         }
-        .cursor {
+        #cursor {
             display: inline-block;
             width: 10px;
             height: 18px;
@@ -389,7 +389,7 @@ Mais les anomalies continuent...`,
                     currentInput = '';
                     return;
                 }
-                output.split('\n').forEach(line => {
+                output.split('').forEach(line => {
                     addLine(line, 'output');
                 });
             } else if (cmd) {
@@ -409,12 +409,10 @@ Mais les anomalies continuent...`,
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const cmd = currentInput.trim().toLowerCase();
-                if (cmd) {
-                    commandHistory.push(cmd);
-                    historyIndex = commandHistory.length;
-                }
+                commandHistory.push(cmd);
+                historyIndex = commandHistory.length;
 
-                // Figer la ligne : retirer juste le curseur, garder le texte tapé
+                // Supprimer le curseur et le prompt actuel
                 if (activeCursor) activeCursor.remove();
                 activeCursor = null;
                 activeInputSpan = null;

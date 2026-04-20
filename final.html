@@ -1,4 +1,4 @@
-<!-- final.html - PAGE FINALE (Code caché 135597) -->
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,15 +11,15 @@
             background: #020202;
             color: #777;
             font-family: 'Courier New', monospace;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -30,7 +30,7 @@
             z-index: 1;
         }
         .fog {
-            position: absolute;
+            position: fixed;
             width: 200%;
             height: 200%;
             background: radial-gradient(circle at 50% 50%, rgba(15,15,15,0.6) 0%, transparent 60%),
@@ -46,7 +46,7 @@
             66% { transform: translate(-10%, 10%) scale(0.95); }
         }
         .scanlines {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -58,25 +58,30 @@
         .container {
             position: relative;
             z-index: 10;
-            max-width: 650px;
-            padding: 40px;
+            max-width: 600px;
+            padding: 30px 40px;
             text-align: center;
+            max-height: 95vh;
+            overflow-y: auto;
         }
         .welcome {
-            font-size: 14px;
+            font-size: 13px;
             color: #444;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             letter-spacing: 3px;
             opacity: 0;
-            animation: reveal 4s ease-out forwards;
+            animation: reveal 3s ease-out forwards;
         }
         .final-text {
-            font-size: 15px;
-            line-height: 2.4;
+            font-size: 14px;
+            line-height: 1.8;
             color: #555;
             text-shadow: 0 0 5px rgba(100,100,100,0.2);
             opacity: 0;
-            animation: reveal 8s ease-out 2s forwards;
+            animation: reveal 6s ease-out 1.5s forwards;
+        }
+        .final-text p {
+            margin-bottom: 8px;
         }
         .final-text .hidden-num {
             color: #777;
@@ -84,26 +89,26 @@
             text-shadow: 0 0 8px rgba(100,100,100,0.4);
         }
         @keyframes reveal {
-            0% { opacity: 0; filter: blur(5px); letter-spacing: 5px; }
+            0% { opacity: 0; filter: blur(5px); letter-spacing: 3px; }
             50% { opacity: 0.5; filter: blur(2px); }
             100% { opacity: 1; filter: blur(0); letter-spacing: normal; }
         }
         .code-final {
             display: inline-block;
-            margin-top: 50px;
-            padding: 20px 40px;
+            margin-top: 25px;
+            padding: 12px 30px;
             border: 1px solid #333;
             color: #888;
-            font-size: 28px;
-            letter-spacing: 8px;
+            font-size: 22px;
+            letter-spacing: 6px;
             background: rgba(10,10,10,0.5);
             opacity: 0;
-            animation: reveal 6s ease-out 8s forwards;
+            animation: reveal 4s ease-out 6s forwards;
         }
         .back {
             position: fixed;
-            bottom: 30px;
-            left: 30px;
+            bottom: 20px;
+            left: 20px;
             color: #1a1a1a;
             text-decoration: none;
             font-size: 11px;
@@ -113,7 +118,7 @@
         }
         .back:hover { color: #333; }
         .glitch-line {
-            position: absolute;
+            position: fixed;
             left: 0;
             width: 100%;
             height: 2px;
@@ -127,6 +132,10 @@
             50% { opacity: 1; }
             100% { opacity: 0; transform: translateX(100%); }
         }
+        /* Scrollbar discrète */
+        .container::-webkit-scrollbar { width: 4px; }
+        .container::-webkit-scrollbar-track { background: transparent; }
+        .container::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
     </style>
 </head>
 <body>
@@ -137,34 +146,26 @@
         <div class="welcome">Bienvenue SGVybWFu</div>
         
         <div class="final-text">
-            Je ne m'attendais pas à ce que tu te retrouves là.<br>
-            Mais c'est mieux ainsi.<br><br>
-            
-            Tu as dépassé la surface.<br>
-            Tu as vu au-delà du rideau.<br><br>
-            
-            Ce que tu crois être réel n'est qu'une couche.<br>
-            Une <span class="hidden-num">1</span>ère couche parmi tant d'autres.<br><br>
-            
-            Les nombres te guideront.<br>
-            <span class="hidden-num">3</span> est le premier pas.<br>
-            <span class="hidden-num">5</span> révèle la structure cachée.<br><br>
-            
-            Cherche dans l'obscurité ce que la lumière cache.<br>
-            <span class="hidden-num">5</span> fois tu devras hésiter.<br>
-            <span class="hidden-num">9</span> fois tu devras persévérer.<br><br>
-            
-            La vérité n'appartient qu'à ceux<br>
-            qui osent chercher dans l'ombre.<br><br>
-            
-            Le monde que tu connais n'est qu'une façade.<br>
-            Derrière chaque ombre se cache une réponse.<br><br>
-            
-            Utilise ce code pour déverrouiller<br>
-            la fin véritable.<br><br>
-            
-            <span class="hidden-num">7</span> est le dernier chiffre.<br>
-            Assemble-les. Trouve le coffre.
+            <p>Je ne m'attendais pas à ce que tu te retrouves là.</p>
+            <p>Mais c'est mieux ainsi.</p>
+            <p style="margin-top: 12px;">Tu as dépassé la surface.</p>
+            <p>Tu as vu au-delà du rideau.</p>
+            <p style="margin-top: 12px;">Ce que tu crois être réel n'est qu'une couche.</p>
+            <p>Une <span class="hidden-num">1</span>ère couche parmi tant d'autres.</p>
+            <p style="margin-top: 12px;">Les nombres te guideront.</p>
+            <p><span class="hidden-num">3</span> est le premier pas.</p>
+            <p><span class="hidden-num">5</span> révèle la structure cachée.</p>
+            <p style="margin-top: 12px;">Cherche dans l'obscurité ce que la lumière cache.</p>
+            <p><span class="hidden-num">5</span> fois tu devras hésiter.</p>
+            <p><span class="hidden-num">9</span> fois tu devras persévérer.</p>
+            <p style="margin-top: 12px;">La vérité n'appartient qu'à ceux</p>
+            <p>qui osent chercher dans l'ombre.</p>
+            <p style="margin-top: 12px;">Le monde que tu connais n'est qu'une façade.</p>
+            <p>Derrière chaque ombre se cache une réponse.</p>
+            <p style="margin-top: 12px;">Utilise ce code pour déverrouiller</p>
+            <p>la fin véritable.</p>
+            <p style="margin-top: 8px;"><span class="hidden-num">7</span> est le dernier chiffre.</p>
+            <p>Assemble-les. Trouve le coffre.</p>
         </div>
         
         <div class="code-final">PHOENIX</div>
@@ -196,4 +197,5 @@
         }, 4000);
     </script>
 </body>
-</html>
+</html>'''
+

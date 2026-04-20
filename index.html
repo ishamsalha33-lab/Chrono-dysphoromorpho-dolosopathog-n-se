@@ -1,0 +1,381 @@
+<!-- index.html - SITE VITRINE PRINCIPAL -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Votre boutique en ligne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: #fff;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e9ecef;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #666;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #2c3e50;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .search-section {
+            padding: 40px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .search-bar {
+            width: 600px;
+            max-width: 90%;
+            padding: 15px 25px;
+            border: 2px solid #e9ecef;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 60px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .product-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            color: #3498db;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .add-to-cart:hover {
+            background: #34495e;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 50px;
+            background: #f8f9fa;
+            margin-top: 50px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2c3e50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: none;
+            animation: slideIn 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .header { padding: 15px 20px; flex-direction: column; gap: 15px; }
+            .hero h1 { font-size: 32px; }
+            .features { grid-template-columns: 1fr; }
+            .products { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">TechStore</a>
+        <nav class="nav">
+            <a href="index.html">Accueil</a>
+            <a href="produits.html">Produits</a>
+            <a href="contact.html">Contact</a>
+            <a href="panier.html" class="cart-icon">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Bienvenue sur TechStore</h1>
+        <p>Découvrez notre sélection de produits technologiques de haute qualité</p>
+        <a href="produits.html" class="btn">Voir tous les produits</a>
+    </section>
+
+    <section class="search-section">
+        <input type="text" class="search-bar" id="searchInput" placeholder="Rechercher un produit">
+    </section>
+
+    <section class="products">
+        <div class="product-card">
+            <div class="product-img">📱</div>
+            <div class="product-title">SmartPhone X Pro</div>
+            <div class="product-desc">Le dernier smartphone avec caméra 108MP</div>
+            <div class="product-price">899€</div>
+            <button class="add-to-cart" onclick="addToCart('SmartPhone X Pro', 899)">Ajouter au panier</button>
+        </div>
+        <div class="product-card">
+            <div class="product-img">💻</div>
+            <div class="product-title">UltraBook 15"</div>
+            <div class="product-desc">Performances exceptionnelles, design élégant</div>
+            <div class="product-price">1299€</div>
+            <button class="add-to-cart" onclick="addToCart('UltraBook 15', 1299)">Ajouter au panier</button>
+        </div>
+        <div class="product-card">
+            <div class="product-img">🎧</div>
+            <div class="product-title">AirPods Pro Max</div>
+            <div class="product-desc">Réduction de bruit active premium</div>
+            <div class="product-price">249€</div>
+            <button class="add-to-cart" onclick="addToCart('AirPods Pro Max', 249)">Ajouter au panier</button>
+        </div>
+        <div class="product-card">
+            <div class="product-img">⌚</div>
+            <div class="product-title">SmartWatch Series 7</div>
+            <div class="product-desc">Suivi santé complet, autonomie 7 jours</div>
+            <div class="product-price">399€</div>
+            <button class="add-to-cart" onclick="addToCart('SmartWatch Series 7', 399)">Ajouter au panier</button>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <div class="feature-icon">🚚</div>
+            <h3>Livraison Gratuite</h3>
+            <p>Sur toutes les commandes de plus de 50€</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🔄</div>
+            <h3>Retours 30 Jours</h3>
+            <p>Satisfait ou remboursé sous 30 jours</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🔒</div>
+            <h3>Paiement Sécurisé</h3>
+            <p>Transactions 100% sécurisées</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p> 2026 TechStore - Tous droits réservés</p>
+    </footer>
+
+    <div class="notification" id="notification">Produit ajouté au panier !</div>
+
+    <script>
+        // Gestion du panier
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            
+            const notif = document.getElementById('notification');
+            notif.style.display = 'block';
+            setTimeout(() => notif.style.display = 'none', 2000);
+        }
+
+        // Recherche secrète
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                if (this.value.toLowerCase().trim() === 'le prof1') {
+                    window.location.href = 'secret.html';
+                } else {
+                    alert('Aucun produit trouvé pour : ' + this.value);
+                }
+            }
+        });
+
+        updateCartCount();
+    </script>
+</body>
+</html>

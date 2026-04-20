@@ -1,4 +1,4 @@
-<!-- panier.html - PAGE PANIER AVEC EASTER EGG -->
+<!-- panier.html - PAGE PANIER -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,19 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Panier - TechStore</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f8f9fa;
             color: #333;
             min-height: 100vh;
         }
-
         .header {
             background: #fff;
             padding: 20px 50px;
@@ -31,37 +25,29 @@
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-
         .logo {
             font-size: 28px;
             font-weight: bold;
             color: #2c3e50;
             text-decoration: none;
         }
-
         .nav {
             display: flex;
             align-items: center;
             gap: 30px;
         }
-
         .nav a {
             text-decoration: none;
             color: #666;
             font-size: 16px;
             transition: color 0.3s;
         }
-
-        .nav a:hover {
-            color: #2c3e50;
-        }
-
+        .nav a:hover { color: #2c3e50; }
         .cart-icon {
             position: relative;
             cursor: pointer;
             font-size: 20px;
         }
-
         .cart-count {
             position: absolute;
             top: -8px;
@@ -76,43 +62,36 @@
             justify-content: center;
             font-size: 12px;
         }
-
         .page-title {
             text-align: center;
             padding: 40px 20px;
             background: white;
             border-bottom: 1px solid #e9ecef;
         }
-
         .page-title h1 {
             font-size: 32px;
             color: #2c3e50;
         }
-
         .cart-container {
             max-width: 900px;
             margin: 40px auto;
             padding: 0 30px;
         }
-
         .cart-empty {
             text-align: center;
             padding: 80px 20px;
             color: #999;
         }
-
         .cart-empty-icon {
             font-size: 80px;
             margin-bottom: 20px;
         }
-
         .cart-items {
             background: white;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             overflow: hidden;
         }
-
         .cart-item {
             display: grid;
             grid-template-columns: 80px 1fr auto auto;
@@ -121,7 +100,6 @@
             border-bottom: 1px solid #f0f0f0;
             gap: 20px;
         }
-
         .item-img {
             width: 60px;
             height: 60px;
@@ -132,18 +110,15 @@
             justify-content: center;
             font-size: 30px;
         }
-
         .item-name {
             font-weight: 600;
             color: #2c3e50;
         }
-
         .item-price {
             font-size: 18px;
             color: #3498db;
             font-weight: bold;
         }
-
         .remove-btn {
             background: none;
             border: none;
@@ -152,7 +127,6 @@
             font-size: 18px;
             padding: 5px;
         }
-
         .cart-summary {
             background: white;
             border-radius: 10px;
@@ -160,14 +134,12 @@
             padding: 30px;
             margin-top: 30px;
         }
-
         .summary-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;
             color: #666;
         }
-
         .summary-total {
             display: flex;
             justify-content: space-between;
@@ -178,7 +150,6 @@
             font-weight: bold;
             color: #2c3e50;
         }
-
         .checkout-btn {
             background: #27ae60;
             color: white;
@@ -191,24 +162,18 @@
             margin-top: 20px;
             transition: background 0.3s;
         }
-
-        .checkout-btn:hover {
-            background: #229954;
-        }
-
+        .checkout-btn:hover { background: #229954; }
         .promo-section {
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #f0f0f0;
         }
-
         .promo-section label {
             display: block;
             margin-bottom: 8px;
             color: #666;
             font-size: 14px;
         }
-
         .promo-input {
             width: 100%;
             padding: 12px;
@@ -218,12 +183,7 @@
             outline: none;
             transition: border-color 0.3s;
         }
-
-        .promo-input:focus {
-            border-color: #3498db;
-        }
-
-        /* Message secret caché */
+        .promo-input:focus { border-color: #3498db; }
         .secret-message {
             display: none;
             margin-top: 15px;
@@ -235,12 +195,10 @@
             font-size: 14px;
             animation: fadeIn 0.5s;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .footer {
             background: #2c3e50;
             color: white;
@@ -248,15 +206,9 @@
             padding: 30px;
             margin-top: 50px;
         }
-
         @media (max-width: 768px) {
-            .cart-item {
-                grid-template-columns: 60px 1fr auto;
-            }
-            .item-price {
-                grid-column: 2;
-                text-align: left;
-            }
+            .cart-item { grid-template-columns: 60px 1fr auto; }
+            .item-price { grid-column: 2; text-align: left; }
         }
     </style>
 </head>
@@ -289,7 +241,6 @@
 
             <div id="cartWithItems" style="display: none;">
                 <div class="cart-items" id="cartItemsList"></div>
-                
                 <div class="cart-summary">
                     <div class="summary-row">
                         <span>Sous-total</span>
@@ -303,15 +254,11 @@
                         <span>Total</span>
                         <span id="total">0€</span>
                     </div>
-                    
                     <div class="promo-section">
                         <label>Code promo ou commande spéciale</label>
                         <input type="text" class="promo-input" id="promoInput" placeholder="Entrez votre code...">
-                        <div class="secret-message" id="secretMsg">
-                            🔓 Code reconnu. Redirection...
-                        </div>
+                        <div class="secret-message" id="secretMsg">...</div>
                     </div>
-                    
                     <button class="checkout-btn">Passer la commande</button>
                 </div>
             </div>
@@ -333,21 +280,16 @@
             const emptyCart = document.getElementById('emptyCart');
             const cartWithItems = document.getElementById('cartWithItems');
             const cartItemsList = document.getElementById('cartItemsList');
-            
             if (cart.length === 0) {
                 emptyCart.style.display = 'block';
                 cartWithItems.style.display = 'none';
                 return;
             }
-
             emptyCart.style.display = 'none';
             cartWithItems.style.display = 'block';
-            
             let html = '';
             let total = 0;
-            
             const emojis = ['📱', '💻', '🎧', '⌚', '📷', '🖥️', '🎮', '⌨️'];
-            
             cart.forEach((item, index) => {
                 total += item.price;
                 html += `
@@ -359,7 +301,6 @@
                     </div>
                 `;
             });
-            
             cartItemsList.innerHTML = html;
             document.getElementById('subtotal').textContent = total + '€';
             document.getElementById('total').textContent = total + '€';
@@ -372,25 +313,14 @@
             renderCart();
         }
 
-        // Easter egg: détection du code dans le panier
         document.getElementById('promoInput').addEventListener('input', function(e) {
             if (e.target.value === '7392') {
                 const msg = document.getElementById('secretMsg');
                 msg.style.display = 'block';
                 msg.textContent = '...';
-                
-                // Effet de chargement sinistre
-                setTimeout(() => {
-                    msg.textContent = '... accès ...';
-                }, 500);
-                
-                setTimeout(() => {
-                    msg.textContent = '... autorisé ...';
-                }, 1000);
-                
-                setTimeout(() => {
-                    window.location.href = 'final.html';
-                }, 1500);
+                setTimeout(() => { msg.textContent = '... accès ...'; }, 500);
+                setTimeout(() => { msg.textContent = '... autorisé ...'; }, 1000);
+                setTimeout(() => { window.location.href = 'final.html'; }, 1500);
             } else {
                 document.getElementById('secretMsg').style.display = 'none';
             }

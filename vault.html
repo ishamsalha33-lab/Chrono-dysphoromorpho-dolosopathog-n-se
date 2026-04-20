@@ -1,0 +1,258 @@
+<!-- vault.html - PAGE COFFRE (Cadenas) -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>...</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+        }
+        /* Lumière au centre */
+        .light {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(50,50,50,0.3) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.2); }
+        }
+        .fog {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(20,20,20,0.5) 0%, transparent 60%);
+            animation: fogMove 15s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes fogMove {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+        .vault-title {
+            color: #333;
+            font-size: 12px;
+            letter-spacing: 5px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+        .lock-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .digit {
+            width: 60px;
+            height: 80px;
+            background: #111;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #444;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+        }
+        .digit:hover {
+            border-color: #555;
+            color: #666;
+        }
+        .digit.active {
+            border-color: #777;
+            color: #888;
+            box-shadow: 0 0 15px rgba(100,100,100,0.2);
+        }
+        .digit.correct {
+            border-color: #0f0;
+            color: #0f0;
+            box-shadow: 0 0 20px rgba(0,255,0,0.3);
+        }
+        .digit.wrong {
+            border-color: #f00;
+            color: #f00;
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .status {
+            color: #333;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-top: 20px;
+            height: 20px;
+        }
+        .book {
+            display: none;
+            margin-top: 40px;
+            cursor: pointer;
+            animation: appear 2s ease-out;
+        }
+        @keyframes appear {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .book-icon {
+            font-size: 80px;
+            color: #555;
+            transition: all 0.3s;
+        }
+        .book:hover .book-icon {
+            color: #888;
+            text-shadow: 0 0 30px rgba(100,100,100,0.5);
+        }
+        .book-label {
+            color: #444;
+            font-size: 12px;
+            margin-top: 15px;
+            letter-spacing: 3px;
+        }
+        .back {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            color: #111;
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            z-index: 100;
+        }
+        .back:hover { color: #333; }
+    </style>
+</head>
+<body>
+    <div class="light"></div>
+    <div class="fog"></div>
+
+    <div class="container">
+        <div class="vault-title">Archive Sécurisée - Niveau 7</div>
+        
+        <div class="lock-container">
+            <div class="digit" data-index="0">0</div>
+            <div class="digit" data-index="1">0</div>
+            <div class="digit" data-index="2">0</div>
+            <div class="digit" data-index="3">0</div>
+            <div class="digit" data-index="4">0</div>
+            <div class="digit" data-index="5">0</div>
+        </div>
+
+        <div class="status" id="status">Entrez le code</div>
+
+        <div class="book" id="book" onclick="openBook()">
+            <div class="book-icon">📖</div>
+            <div class="book-label">ARCHIVES HERMAN - CLIQUEZ</div>
+        </div>
+    </div>
+
+    <a href="index.html" class="back">← fermer</a>
+
+    <script>
+        const digits = document.querySelectorAll('.digit');
+        const correctCode = '135597';
+        let currentCode = ['0', '0', '0', '0', '0', '0'];
+        let activeIndex = 0;
+
+        digits.forEach((digit, index) => {
+            digit.addEventListener('click', () => {
+                activeIndex = index;
+                updateActive();
+            });
+            
+            digit.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                let val = parseInt(currentCode[index]);
+                if (e.deltaY < 0) {
+                    val = (val + 1) % 10;
+                } else {
+                    val = (val - 1 + 10) % 10;
+                }
+                currentCode[index] = val.toString();
+                digit.textContent = val;
+                checkCode();
+            });
+        });
+
+        function updateActive() {
+            digits.forEach((d, i) => {
+                d.classList.toggle('active', i === activeIndex);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key >= '0' && e.key <= '9') {
+                currentCode[activeIndex] = e.key;
+                digits[activeIndex].textContent = e.key;
+                activeIndex = (activeIndex + 1) % 6;
+                updateActive();
+                checkCode();
+            } else if (e.key === 'ArrowRight') {
+                activeIndex = (activeIndex + 1) % 6;
+                updateActive();
+            } else if (e.key === 'ArrowLeft') {
+                activeIndex = (activeIndex - 1 + 6) % 6;
+                updateActive();
+            } else if (e.key === 'ArrowUp') {
+                let val = parseInt(currentCode[activeIndex]);
+                val = (val + 1) % 10;
+                currentCode[activeIndex] = val.toString();
+                digits[activeIndex].textContent = val;
+                checkCode();
+            } else if (e.key === 'ArrowDown') {
+                let val = parseInt(currentCode[activeIndex]);
+                val = (val - 1 + 10) % 10;
+                currentCode[activeIndex] = val.toString();
+                digits[activeIndex].textContent = val;
+                checkCode();
+            }
+        });
+
+        function checkCode() {
+            const entered = currentCode.join('');
+            const status = document.getElementById('status');
+            
+            if (entered === correctCode) {
+                status.textContent = 'ACCÈS AUTORISÉ';
+                status.style.color = '#0f0';
+                digits.forEach(d => d.classList.add('correct'));
+                document.getElementById('book').style.display = 'block';
+            } else {
+                status.textContent = 'Entrez le code';
+                status.style.color = '#333';
+                digits.forEach(d => d.classList.remove('correct'));
+            }
+        }
+
+        function openBook() {
+            window.location.href = 'archives.html';
+        }
+
+        updateActive();
+    </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!-- office.html - PAGE DOCUMENTAIRE OFFICE -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Solutions - Entreprise</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', serif;
+            background: #f5f5f0;
+            color: #333;
+            line-height: 1.8;
+        }
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 50px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 36px;
+            font-weight: normal;
+            letter-spacing: 3px;
+        }
+        .header p {
+            color: #aaa;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .nav {
+            background: #34495e;
+            padding: 15px;
+            text-align: center;
+        }
+        .nav a {
+            color: #bbb;
+            text-decoration: none;
+            margin: 0 25px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .nav a:hover { color: white; }
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23333" width="1200" height="600"/><rect fill="%23444" x="100" y="100" width="200" height="300"/><rect fill="%23555" x="400" y="80" width="250" height="350"/><rect fill="%23444" x="750" y="120" width="180" height="280"/><rect fill="%23222" x="0" y="500" width="1200" height="100"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        .hero h2 {
+            font-size: 42px;
+            font-weight: normal;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .hero p {
+            margin-top: 15px;
+            font-size: 18px;
+            color: #ddd;
+        }
+        .content {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 30px;
+        }
+        .section {
+            margin-bottom: 60px;
+        }
+        .section h2 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .section p {
+            color: #555;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .stat-box {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .stat-number {
+            font-size: 36px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .stat-label {
+            color: #888;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .team {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .team-member {
+            text-align: center;
+            padding: 20px;
+        }
+        .team-img {
+            width: 120px;
+            height: 120px;
+            background: #ddd;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #999;
+        }
+        .team-name {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .team-role {
+            color: #888;
+            font-size: 14px;
+        }
+        .hidden-msg {
+            color: #f5f5f0;
+            font-size: 1px;
+            user-select: none;
+        }
+        .document-box {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 25px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .document-box::before {
+            content: 'DOCUMENT CLASSÉ';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: #c0392b;
+            color: white;
+            padding: 3px 15px;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+        .redacted {
+            background: #333;
+            color: transparent;
+            padding: 0 5px;
+            user-select: none;
+        }
+        .footer {
+            background: #2c3e50;
+            color: #aaa;
+            text-align: center;
+            padding: 40px;
+            margin-top: 80px;
+        }
+        .footer p {
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        .glitch-img {
+            width: 100%;
+            height: 250px;
+            background: #333;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 14px;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        .glitch-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px);
+        }
+        @media (max-width: 768px) {
+            .stats, .team { grid-template-columns: 1fr; }
+            .hero h2 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>OFFICE SOLUTIONS</h1>
+        <p>Excellence en solutions d'entreprise depuis 2003</p>
+    </div>
+    
+    <div class="nav">
+        <a href="#about">À Propos</a>
+        <a href="#services">Services</a>
+        <a href="#team">Équipe</a>
+        <a href="#locations">Implantations</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <div class="hero">
+        <div>
+            <h2>L'Innovation au Service du Progrès</h2>
+            <p>Découvrez nos solutions technologiques de pointe</p>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="section" id="about">
+            <h2>Notre Histoire</h2>
+            <p>Fondée en 2003, Office Solutions est rapidement devenue une référence dans le domaine des technologies d'entreprise. Notre siège social, situé au cœur du quartier d'affaires, abrite plus de 200 collaborateurs dévoués à l'excellence.</p>
+            <p>Nous croyons en l'innovation responsable. Chaque solution que nous développons est pensée pour améliorer le quotidien de nos clients tout en respectant les plus hautes normes éthiques.</p>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Employés</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">47</div>
+                    <div class="stat-label">Pays</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Niveaux d'expertise</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="services">
+            <h2>Nos Domaines d'Expertise</h2>
+            <p>Office Solutions propose une gamme complète de services allant du conseil stratégique à l'implémentation de solutions sur mesure. Notre approche holistique garantit des résultats mesurables et durables.</p>
+            
+            <div class="document-box">
+                <h3 style="color: #2c3e50; margin-bottom: 15px;">Rapport Annuel 2006</h3>
+                <p>Au cours de l'exercice 2006, Office Solutions a enregistré une croissance exceptionnelle de <span class="redacted">████%</span> dans le secteur des <span class="redacted">████████████</span>. Nos équipes de recherche ont développé de nouvelles méthodologies permettant d'<span class="redacted">███████████████████</span> la perception <span class="redacted">████████</span> des utilisateurs.</p>
+                <p>Le projet "Voile", lancé en 2004, a atteint sa <span class="redacted">█████</span> phase d'expérimentation. Les résultats préliminaires dépassent toutes les attentes, avec un taux de <span class="redacted">████████</span> de <span class="redacted">██.██%</span>.</p>
+                <p style="font-size: 12px; color: #999; margin-top: 15px;">Document interne - Ne pas distribuer</p>
+            </div>
+
+            <div class="glitch-img">
+                [IMAGE: Laboratoire de recherche - Accès restreint]
+            </div>
+        </div>
+
+        <div class="section" id="team">
+            <h2>Notre Équipe de Direction</h2>
+            <p>Dirigée par des experts de renommée internationale, notre équipe allie vision stratégique et excellence opérationnelle.</p>
+            
+            <div class="team">
+                <div class="team-member">
+                    <div class="team-img">👤</div>
+                    <div class="team-name">Richard M. Holloway</div>
+                    <div class="team-role">PDG & Fondateur</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-img">👤</div>
+                    <div class="team-name">Dr. Sarah Chen</div>
+                    <div class="team-role">Directrice R&D</div>
+                </div>
+                <div class="team-member">
+                    <div class="team-img" style="background: #444; color: #666;">?</div>
+                    <div class="team-name" style="color: #999;">[DONNÉES SUPPRIMÉES]</div>
+                    <div class="team-role" style="color: #bbb;">Ancien Chercheur Principal</div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 30px; font-size: 13px; color: #888; font-style: italic;">
+                Note: Le Dr. Herman Voss, ancien chercheur principal, a quitté l'entreprise en novembre 2006 pour des raisons personnelles. Nous lui souhaitons le meilleur dans ses futurs projets.
+            </p>
+        </div>
+
+        <div class="section" id="locations">
+            <h2>Nos Implantations</h2>
+            <p>Présents sur trois continents, nous maintenons des bureaux dans les principales zones économiques mondiales.</p>
+            <p><strong>Siège Social:</strong> 42 Avenue de l'Innovation, 75008 Paris<br>
+            <strong>Centre R&D:</strong> Zone Industrielle Nord, Bâtiment 7<br>
+            <strong>Centre de Données:</strong> Localisation classifiée - Niveau sécurité 5</p>
+            
+            <div class="glitch-img">
+                [IMAGE: Vue aérienne du complexe - Niveaux souterrains non représentés]
+            </div>
+        </div>
+
+        <div class="section" id="contact">
+            <h2>Contactez-Nous</h2>
+            <p>Pour toute demande commerciale ou partenariat, notre équipe est à votre disposition.</p>
+            <p>Email: contact@officesolutions.corp<br>
+            Téléphone: +33 1 99 88 77 66<br>
+            Fax: +33 1 99 88 77 65</p>
+            
+            <p style="margin-top: 30px; padding: 20px; background: #f0f0f0; border-left: 4px solid #2c3e50; font-size: 13px;">
+                <strong>Accès visiteurs:</strong> Sur rendez-vous uniquement. Toute personne entrant dans les locaux est soumise à un protocole de sécurité de niveau 3. Les sous-sols sont strictement interdits au public.
+            </p>
+        </div>
+
+        <!-- Message caché dans le HTML -->
+        <div class="hidden-msg">
+            ILS ÉCOUTENT. ILS OBSERVENT. NE CROYEZ PAS LA FACADE. HERMAN AVAIT RAISON. LA VERITE EST SOUS VOS PIEDS.
+        </div>
+    </div>
+
+    <div class="footer">
+        <p> OFFICE SOLUTIONS - Tous droits réservés - Propriété privée</p>
+        <p style="margin-top: 10px; font-size: 10px; color: #555;">Système de surveillance actif - Zone sécurisée niveau 4</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!-- terminal.html - TERMINAL HACKER (Herman) -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>root@system:~</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            height: 100vh;
+            overflow: hidden;
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        #terminal {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .line {
+            margin-bottom: 5px;
+            word-wrap: break-word;
+        }
+        .prompt {
+            color: #0f0;
+        }
+        .output {
+            color: #0a0;
+            margin-left: 0;
+            margin-bottom: 10px;
+        }
+        .error {
+            color: #f00;
+        }
+        .warning {
+            color: #ff0;
+        }
+        .input-line {
+            display: flex;
+            align-items: center;
+        }
+        #cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: #0f0;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .typing {
+            animation: none;
+        }
+        .hidden-link {
+            color: #0a0;
+            text-decoration: none;
+        }
+        .hidden-link:hover {
+            color: #0f0;
+            text-decoration: underline;
+        }
+        .back {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: #030;
+            text-decoration: none;
+            font-size: 11px;
+            z-index: 100;
+            transition: color 0.3s;
+        }
+        .back:hover { color: #0f0; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #0f0; }
+    </style>
+</head>
+<body>
+    <div id="terminal"></div>
+    <a href="index.html" class="back">[x] fermer</a>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        let commandHistory = [];
+        let historyIndex = -1;
+
+        const bootText = [
+            { text: 'BIOS DATE 01/15/2006 14:22:51 VER 1.02', delay: 50 },
+            { text: 'CPU: Intel(R) Core(TM)2 Duo CPU T7200 @ 2.00GHz', delay: 80 },
+            { text: 'Speed: 2000 MHz', delay: 60 },
+            { text: 'Initializing USB Controllers .. Done.', delay: 100 },
+            { text: '512MB OK', delay: 70 },
+            { text: '', delay: 50 },
+            { text: 'LOADING KERNEL...', delay: 200 },
+            { text: '[████████████████████] 100%', delay: 300 },
+            { text: '', delay: 100 },
+            { text: 'MOUNTING FILESYSTEMS...', delay: 150 },
+            { text: '/dev/sda1: clean, 45211/488288 files, 234567/976562 blocks', delay: 200 },
+            { text: '', delay: 100 },
+            { text: 'WARNING: UNEXPECTED FILE SYSTEM CORRUPTION DETECTED', delay: 200, class: 'warning' },
+            { text: 'ATTEMPTING RECOVERY...', delay: 300 },
+            { text: 'RECOVERY FAILED. MANUAL INTERVENTION REQUIRED.', delay: 200, class: 'error' },
+            { text: '', delay: 100 },
+            { text: '═══════════════════════════════════════════════════', delay: 50 },
+            { text: '  SYSTÈME D\'ARCHIVES HERMAN - ACCÈS RESTREINT', delay: 100 },
+            { text: '═══════════════════════════════════════════════════', delay: 50 },
+            { text: '', delay: 100 },
+            { text: 'Connexion établie via proxy anonyme [TOR NODE 47.23.11.89]', delay: 150 },
+            { text: 'Dernière connexion: 26/11/2006 03:47:12', delay: 100 },
+            { text: '', delay: 100 },
+            { text: 'Tapez "help" pour la liste des commandes disponibles.', delay: 100 }
+        ];
+
+        const commands = {
+            help: `Commandes disponibles:
+  whoami      - Informations sur l'utilisateur
+  date        - Date système
+  ls          - Lister les fichiers
+  cat [file]  - Afficher le contenu d'un fichier
+  history     - Historique des expérimentations
+  clear       - Effacer l'écran
+  exit        - Fermer la session`,
+
+            whoami: `IDENTITÉ: Dr. Herman Voss
+TITRE: Chercheur Principal - Division Perception Réelle
+AFFILIATION: Institut Office (Section Souterraine)
+DATE DE NAISSANCE: [CLASSIFIÉ]
+STATUT: DISPARU - Dernière trace: 26/11/2006
+
+BIOGRAPHIE:
+Herman Voss était un neuroscientifique de génie, spécialisé dans
+la perception sensorielle et la conscience. Recruté par l'Institut
+Office en 2003, il dirigeait le projet "Voile" - une série
+d'expériences visant à prouver que la réalité telle que nous la
+percevons est une construction artificielle.
+
+Ses recherches l'ont mené à découvrir des anomalies dans le tissu
+de la perception collective. Il prétendait avoir trouvé des
+"failles" dans ce que nous appelons réalité - des moments où la
+simulation montrerait ses limites.
+
+Le 26 novembre 2006, Herman a activé le protocole "Éveil" sans
+autorisation. Il a disparu des locaux de l'Institut Office,
+laissant derrière lui des archives cryptées et ce message:
+
+"Je ne suis pas mort. Je suis sorti. Ils savent que je sais.
+Ne faites pas confiance à ce que vous voyez. Le monde est un
+cauchemar dont personne ne veut se réveiller."
+
+Son actuel lieu de séjour est inconnu.
+Ses archives continuent de s'auto-modifier.`,
+
+            date: new Date().toString(),
+
+            ls: `total 42
+drwxr-xr-x  2 root root  4096 Nov 26  2006 .
+drwxr-xr-x  2 root root  4096 Nov 26  2006 ..
+-rw-r--r--  1 herman herman  2048 Nov 25  2006 journal_exp_01.log
+-rw-r--r--  1 herman herman  4096 Nov 25  2006 journal_exp_07.log
+-rw-r--r--  1 herman herman  1024 Nov 26  2006 dernier_message.txt
+-rw-r--r--  1 herman herman   512 Nov 26  2006 protocole_eveil.dat
+-rw-r--r--  1 herman herman  8192 Nov 26  2006 anomalies_detectées.db
+-rw-r--r--  1 herman herman   256 Nov 26  2006 .hidden_config`,
+
+            'cat journal_exp_01.log': `EXPÉRIENCE #01 - JOURNAL
+Date: 14/03/2004
+Sujet: Premiers tests de perception altérée
+
+Résultat: Les sujets rapportent des "dédoublements" de la réalité.
+Certains voient des "fissures" dans les murs, d'autres entendent
+des fréquences inaudibles. Tous décrivent la même sensation:
+"quelque chose regarde de l'autre côté."
+
+Note d'Herman: "Ce n'est pas de la folie. C'est une ouverture."`,
+
+            'cat journal_exp_07.log': `EXPÉRIENCE #07 - JOURNAL
+Date: 03/09/2006
+Sujet: Test de rupture de voile - Niveau 3
+
+Résultat: CATASTROPHIQUE. Le sujet #7 est entré dans un état
+de transe profonde et a commencé à parler en langues inconnues.
+Après 47 minutes, il s'est réveillé en pleurant et a dessiné
+un symbole récurrent: un œil à l'intérieur d'un hexagone.
+
+Il a dit: "Ils nous ont trouvés. Ils savent que nous savons.
+Le bureau n'est pas un bureau. C'est une cage."
+
+Herman a ordonné la destruction des bandes. Il a refusé de
+ poursuivre les tests sur des sujets humains.`,
+
+            'cat dernier_message.txt': `Si vous lisez ceci, c'est que vous êtes assez proche.
+
+Ne cherchez pas à me retrouver. Cherchez la vérité.
+
+L'Institut Office n'est pas ce qu'il prétend être.
+Ce "bureau" est une façade. Dessous, dans les sous-sols,
+se déroulent des expériences que l'esprit humain n'est pas
+censé supporter.
+
+Ils étudient la nature de la réalité en brisant des esprits.
+Ils appellent ça "recherche". C'est de la torture dimensionnelle.
+
+Le 26/11/2006, j'ai tout vu. J'ai tout compris.
+
+Et maintenant, je suis de l'autre côté.
+
+- H.`,
+
+            'cat protocole_eveil.dat': `PROTOCOLE ÉVEIL - NIVEAU 5
+═══════════════════════════════════════
+PHASE 1: Désactivation des inhibiteurs perceptifs
+PHASE 2: Injection de composé X-7392
+PHASE 3: Exposition aux fréquences de rupture (4.7Hz)
+PHASE 4: [DONNÉES CORROMPUES]
+
+RISQUE: MORT CÉRÉBRALE / TRANSCENDANCE DIMENSIONNELLE
+TAUX DE RÉUSSITE: 0.03%
+
+Herman a forcé l'exécution du protocole sur lui-même.
+Les caméras ont enregistré son corps s'effondrer...
+puis se dissoudre en particules de lumière grise.
+
+La salle était vide. Il n'y avait plus rien.
+Juste un mot gravé au laser sur le mur:
+
+"LIBRE"`,
+
+            'cat anomalies_detectées.db': `ANOMALIES ENREGISTRÉES - BASE DE DONNÉES
+══════════════════════════════════════════
+ID: A-001 | Type: Fissure visuelle | Fréquence: 12/jour
+ID: A-007 | Type: Écho temporel | Fréquence: 3/semaine
+ID: A-013 | Type: Doublon humain | Fréquence: 1/mois
+ID: A-026 | Type: Message d'outre-monde | Fréquence: [ILLIMITÉ]
+
+Dernière anomalie (26/11/2006 03:47:12):
+"Les murs respirent. Les nombres mentent.
+ 1 n'est pas 1. 3 cache 5. 5 cache 9.
+ 9 mène à 7. 7 ouvre tout."
+
+[FIN DU FICHIER - CORRUPTION DÉTECTÉE]`,
+
+            'cat .hidden_config': `do_you_feel_fear=true
+reality_layer=1
+observer_detected=true
+protocol_initiated=false`,
+
+            history: `HISTORIQUE DES EXPÉRIMENTATIONS - INSTITUT OFFICE
+══════════════════════════════════════════════════
+2003: Fondation du projet "Voile" sous couverture commerciale
+2004: Expériences #01 à #15 - Tests sur perception sensorielle
+2005: Expériences #16 à #45 - Introduction du composé X-7392
+2006: Expériences #46 à #52 - [DONNÉES CLASSIFIÉES]
+
+26/11/2006: INCIDENT H-001
+Dr. Herman Voss active le protocole Éveil non-autorisé.
+Disparition du sujet. Effacement des preuves échoué.
+Institut Office passe en mode "containment narratif".
+
+Depuis: Façade commerciale maintenue.
+Personnel remplacé. Archives scellées.
+Mais les anomalies continuent...`,
+
+            clear: '__CLEAR__',
+            exit: 'Fermeture de la session...\nConnexion terminée.'
+        };
+
+        function addLine(text, className = '') {
+            const line = document.createElement('div');
+            line.className = 'line ' + className;
+            line.textContent = text;
+            terminal.appendChild(line);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function addPrompt() {
+            const line = document.createElement('div');
+            line.className = 'line input-line';
+            line.innerHTML = '<span class="prompt">root@herman-archives:~# </span><span id="currentInput"></span><span id="cursor"></span>';
+            terminal.appendChild(line);
+            terminal.scrollTop = terminal.scrollHeight;
+            return line;
+        }
+
+        async function typeBoot() {
+            for (let item of bootText) {
+                await new Promise(r => setTimeout(r, item.delay));
+                addLine(item.text, item.class || '');
+            }
+            addPrompt();
+            setupInput();
+        }
+
+        function setupInput() {
+            let currentInput = '';
+            const inputSpan = document.getElementById('currentInput');
+            
+            document.addEventListener('keydown', function handler(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const cmd = currentInput.trim().toLowerCase();
+                    commandHistory.push(cmd);
+                    historyIndex = commandHistory.length;
+                    
+                    // Remove cursor and input line
+                    const cursor = document.getElementById('cursor');
+                    if (cursor) cursor.remove();
+                    
+                    // Process command
+                    processCommand(cmd);
+                    
+                    // Add new prompt
+                    addPrompt();
+                    currentInput = '';
+                    
+                    // Setup new input
+                    const newInput = document.getElementById('currentInput');
+                    document.removeEventListener('keydown', handler);
+                    setupInputListener(newInput);
+                } else if (e.key === 'Backspace') {
+                    e.preventDefault();
+                    currentInput = currentInput.slice(0, -1);
+                    inputSpan.textContent = currentInput;
+                } else if (e.key.length === 1) {
+                    currentInput += e.key;
+                    inputSpan.textContent = currentInput;
+                }
+            });
+        }
+
+        function setupInputListener(inputSpan) {
+            let currentInput = '';
+            document.addEventListener('keydown', function handler(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const cmd = currentInput.trim().toLowerCase();
+                    commandHistory.push(cmd);
+                    historyIndex = commandHistory.length;
+                    
+                    const cursor = document.getElementById('cursor');
+                    if (cursor) cursor.remove();
+                    
+                    processCommand(cmd);
+                    addPrompt();
+                    currentInput = '';
+                    document.removeEventListener('keydown', handler);
+                    setupInputListener(document.getElementById('currentInput'));
+                } else if (e.key === 'Backspace') {
+                    e.preventDefault();
+                    currentInput = currentInput.slice(0, -1);
+                    inputSpan.textContent = currentInput;
+                } else if (e.key.length === 1) {
+                    currentInput += e.key;
+                    inputSpan.textContent = currentInput;
+                }
+            });
+        }
+
+        function processCommand(cmd) {
+            if (cmd === 'clear') {
+                terminal.innerHTML = '';
+                return;
+            }
+            if (cmd === 'exit') {
+                addLine('Fermeture de la session...');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+                return;
+            }
+            if (cmd === '26/11/2006') {
+                addLine('', 'output');
+                addLine('═══════════════════════════════════════════════════', 'output');
+                addLine('RAPPORT D\'INCIDENT - 26 NOVEMBRE 2006', 'warning');
+                addLine('═══════════════════════════════════════════════════', 'output');
+                addLine('', 'output');
+                addLine('Ce que vous appelez "bureau" n\'en est pas un.', 'output');
+                addLine('', 'output');
+                addLine('L\'Institut Office a établi sa façade en surface:', 'output');
+                addLine('un espace de travail banal, des employés ordinaires,', 'output');
+                addLine('une routine quotidienne. Mais sous vos pieds,', 'output');
+                addLine('sous le sol de ce bâtiment, s\'étendent 7 niveaux', 'output');
+                addLine('de laboratoires souterrains.', 'output');
+                addLine('', 'output');
+                addLine('Là-bas, on ne vend pas de produits.', 'output');
+                addLine('Là-bas, on brise des esprits pour comprendre', 'output');
+                addLine('la nature de leur prison.', 'output');
+                addLine('', 'output');
+                addLine('Le Dr. Herman Voss a découvert la vérité:', 'output');
+                addLine('notre monde est une simulation maintenue par', 'output');
+                addLine('des entités que l\'Institut nomme "Les Architectes".', 'output');
+                addLine('', 'output');
+                addLine('Les expériences sur les humains visaient à identifier', 'output');
+                addLine('ceux capables de percevoir les "coutures" de la réalité.', 'output');
+                addLine('Ceux qui voient les failles. Ceux qui rêvent éveillés.', 'output');
+                addLine('', 'output');
+                addLine('Herman était le sujet le plus prometteur.', 'output');
+                addLine('Il voyait trop clair. Il comprenait trop bien.', 'output');
+                addLine('', 'output');
+                addLine('Alors il a choisi de sortir.', 'output');
+                addLine('Pas de mourir. De TRANSCENDER.', 'output');
+                addLine('', 'output');
+                addLine('Le 26/11/2006 à 03:47, le protocole Éveil a été activé.', 'output');
+                addLine('Les caméras ont filmé son corps se désintégrer en', 'output');
+                addLine('milliers de points lumineux gris.', 'output');
+                addLine('', 'output');
+                addLine('Il a laissé un dernier message:', 'output');
+                addLine('"Ne me cherchez pas. Cherchez la sortie."', 'output');
+                addLine('', 'output');
+                addLine('═══════════════════════════════════════════════════', 'output');
+                addLine('do you feel fear?', 'error');
+                addLine('═══════════════════════════════════════════════════', 'output');
+                return;
+            }
+            
+            if (commands[cmd]) {
+                const output = commands[cmd];
+                if (output === '__CLEAR__') {
+                    terminal.innerHTML = '';
+                    return;
+                }
+                output.split('\n').forEach(line => {
+                    addLine(line, 'output');
+                });
+            } else if (cmd) {
+                addLine(`Commande non trouvée: ${cmd}`, 'error');
+                addLine('Tapez "help" pour la liste des commandes.', 'output');
+            }
+        }
+
+        // Start boot sequence
+        typeBoot();
+    </script>
+</body>
+</html>

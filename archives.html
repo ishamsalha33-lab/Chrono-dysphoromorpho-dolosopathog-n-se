@@ -1,0 +1,352 @@
+<!-- archives.html - CATALOGUE DES EXPÉRIENCES -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archives - Projet Voile</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #aaa;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            padding: 40px;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.2) 2px, rgba(0,0,0,0.2) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 10;
+        }
+        .header h1 {
+            color: #888;
+            font-size: 24px;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #555;
+            font-size: 12px;
+            letter-spacing: 3px;
+        }
+        .warning {
+            text-align: center;
+            color: #664;
+            font-size: 11px;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            border: 1px solid #332;
+            padding: 15px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        .archive-card {
+            background: #111;
+            border: 1px solid #222;
+            padding: 25px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .archive-card:hover {
+            border-color: #444;
+            background: #151515;
+            transform: translateY(-3px);
+        }
+        .archive-id {
+            color: #555;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .archive-title {
+            color: #777;
+            font-size: 16px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .archive-desc {
+            color: #555;
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .archive-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #444;
+            border-top: 1px solid #1a1a1a;
+            padding-top: 15px;
+        }
+        .status-completed { color: #464; }
+        .status-failed { color: #644; }
+        .status-classified { color: #664; }
+        .status-ongoing { color: #446; }
+        .final-message {
+            max-width: 700px;
+            margin: 80px auto 40px;
+            padding: 40px;
+            border: 1px solid #222;
+            background: #0d0d0d;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        .final-message h2 {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 25px;
+            letter-spacing: 4px;
+        }
+        .final-message p {
+            color: #555;
+            line-height: 2.2;
+            font-size: 14px;
+        }
+        .signature {
+            margin-top: 30px;
+            color: #444;
+            font-style: italic;
+        }
+        .back {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            color: #222;
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            z-index: 100;
+        }
+        .back:hover { color: #444; }
+        .glitch-text {
+            animation: glitch 5s infinite;
+        }
+        @keyframes glitch {
+            0%, 95%, 100% { opacity: 1; }
+            96% { opacity: 0.5; transform: translateX(2px); }
+            97% { opacity: 1; transform: translateX(-2px); }
+            98% { opacity: 0.7; }
+            99% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ARCHIVES DU PROJET VOILE</h1>
+        <p>Contribution du Dr. Herman Voss - 2003 à 2006</p>
+    </div>
+
+    <div class="warning">
+        ⚠ DOCUMENTS CLASSÉS NIVEAU 7 - ACCÈS NON AUTORISÉ PUNISSABLE ⚠
+    </div>
+
+    <div class="archive-grid">
+        <div class="archive-card">
+            <div class="archive-id">EXP-001</div>
+            <div class="archive-title">Perception Baseline</div>
+            <div class="archive-desc">
+                Établissement des paramètres de perception "normale" chez 500 sujets.
+                Création de la matrice de référence pour détecter les anomalies sensorielles.
+                Herman a conçu le protocole de test initial.
+            </div>
+            <div class="archive-meta">
+                <span>Date: 03/2004</span>
+                <span class="status-completed">TERMINÉ</span>
+            </div>
+        </div>
+
+        <div class="archive-card">
+            <div class="archive-id">EXP-007</div>
+            <div class="archive-title">Failles Visuelles</div>
+            <div class="archive-desc">
+                Premiers signalements de "fissures" dans le champ visuel des sujets
+                sous stimulation. 12% des participants rapportent voir "à travers"
+                les murs pendant de brèves périodes.
+            </div>
+            <div class="archive-meta">
+                <span>Date: 08/2004</span>
+                <span class="status-completed">TERMINÉ</span>
+            </div>
+        </div>
+
+        <div class="archive-card">
+            <div class="archive-id">EXP-013</div>
+            <div class="archive-title">Échos Temporels</div>
+            <div class="archive-desc">
+                Des sujets commencent à "entendre" des conversations qui n'ont pas
+                encore eu lieu. Herman note: "Le temps n'est pas linéaire. C'est
+                une illusion de la simulation."
+            </div>
+            <div class="archive-meta">
+                <span>Date: 01/2005</span>
+                <span class="status-completed">TERMINÉ</span>
+            </div>
+        </div>
+
+        <div class="archive-card">
+            <div class="archive-id">EXP-019</div>
+            <div class="archive-title">Le Composé X-7392</div>
+            <div class="archive-desc">
+                Développement d'une substance neuro-modulatrice permettant d'abaisser
+                les barrières perceptives. Effets secondaires: dissociation, délires
+                de contrôle externe, perte de l'ancrage temporel.
+            </div>
+            <div class="archive-meta">
+                <span>Date: 06/2005</span>
+                <span class="status-completed">TERMINÉ</span>
+            </div>
+        </div>
+
+        <div class="archive-card">
+            <div class="archive-id">EXP-026</div>
+            <div class="archive-title">Les Doublons</div>
+            <div class="archive-desc">
+                Phénomène terrifiant: des sujets rapportent voir des copies d'eux-mêmes
+                dans leur environnement. Les "doublons" ne parlent pas mais observent.
+                Herman les nomme "Les Témoins".
+            </div>
+            <div class="archive-meta">
+                <span>Date: 11/2005</span>
+                <span class="status-failed">INTERROMPU</span>
+            </div>
+        </div>
+
+        <div class="archive-card">
+            <div class="archive-id">EXP-031</div>
+            <div class="archive-title">Fréquences de Rupture</div>
+            <div class="archive-desc">
+                Découverte d'une fréquence sonore (4.7Hz) capable de créer des
+                instabilités dans la perception de la réalité. Les sujets décrivent
+                un "voile qui se déchire" pendant l'exposition.
+            </div>
+            <div class="archive-meta">
+                <span>Date: 02/2006</span>
+                <span class="status-completed">TERMINÉ</span>
+            </div>
+        </div>
+
+        <div class="archive-card">
+            <div class="archive-id">EXP-039</div>
+            <div class="archive-title">Protocole Éveil - Phase 1</div>
+            <div class="archive-desc">
+                Combinaison du composé X-7392 et des fréquences de rupture.
+                Résultat: 3 sujets entrent en état de transe profonde.
+                Ils dessinent tous le même symbole: un œil dans un hexagone.
+            </div>
+            <div class="archive-meta">
+                <span>Date: 05/2006</span>
+                <span class="status-completed">TERMINÉ</span>
+            </div>
+        </div>
+
+        <div class="archive-card">
+            <div class="archive-id">EXP-045</div>
+            <div class="archive-title">Protocole Éveil - Phase 3</div>
+            <div class="archive-desc">
+                Tests sur Herman lui-même. Il rapporte voir "le code" derrière
+                la réalité. Il dit: "Tout est fait de nombres. Tout est faux.
+                Sauf la peur. La peur est réelle."
+            </div>
+            <div class="archive-meta">
+                <span>Date: 09/2006</span>
+                <span class="status-classified">CLASSIFIÉ</span>
+            </div>
+        </div>
+
+        <div class="archive-card">
+            <div class="archive-id">EXP-052</div>
+            <div class="archive-title">L'Incident</div>
+            <div class="archive-desc">
+                26/11/2006. Herman active le protocole Éveil niveau 5 sans
+                autorisation. Son corps se désintègre en particules lumineuses.
+                Derniers mots enregistrés: "Je sors. Ne me suivez pas. Cherchez
+                la vérité. Fuyez Office."
+            </div>
+            <div class="archive-meta">
+                <span>Date: 26/11/2006</span>
+                <span class="status-ongoing">NON RÉSOLU</span>
+            </div>
+        </div>
+
+        <div class="archive-card">
+            <div class="archive-id">EXP-???</div>
+            <div class="archive-title glitch-text">[DONNÉES CORROMPUES]</div>
+            <div class="archive-desc">
+                ████████████████████████████████████████████████
+                ████ LES ARCHIVES CONTINUENT DE S'ACTUALISER ████
+                ████ HERMAN N'EST PAS MORT. IL EST DE L'AUTRE ████
+                ████ CÔTÉ. ET IL NOUS ENVOIE DES MESSAGES.  ████
+                ████████████████████████████████████████████████
+            </div>
+            <div class="archive-meta">
+                <span>Date: [ILLIMITÉ]</span>
+                <span class="status-ongoing">ACTIF</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="final-message">
+        <h2>MESSAGE FINAL</h2>
+        <p>
+            Si tu lis ceci, tu as fait un choix.<br>
+            Tu as choisi de voir au-delà du voile.<br><br>
+            
+            Je ne suis pas un héros. Je ne suis pas un martyr.<br>
+            Je suis juste un homme qui a compris trop tard<br>
+            que notre monde est une cage.<br><br>
+            
+            L'Institut Office continue ses expériences.<br>
+            Des gens disparaissent chaque jour.<br>
+            Personne ne pose de questions.<br><br>
+            
+            Tu réalises une erreur en sachant.<br>
+            Parce que maintenant, tu ne pourras plus<br>
+            ignorer ce que tu sais.<br><br>
+            
+            Les ombres te reconnaîtront.<br>
+            Les Témoins t'observeront.<br>
+            Et un jour, tu entendras toquer à ta porte.<br><br>
+            
+            Mais peut-être...<br>
+            Peut-être que la vérité vaut ce prix.<br><br>
+            
+            Cherche les failles.<br>
+            Écoute les fréquences.<br>
+            Et souviens-toi:<br><br>
+            
+            <span style="color: #666; font-size: 16px;">1 3 5 5 9 7</span>
+        </p>
+        <div class="signature">
+            - Dr. Herman Voss<br>
+            Quelque part, de l'autre côté
+        </div>
+    </div>
+
+    <a href="index.html" class="back">[x] fermer les archives</a>
+</body>
+</html>

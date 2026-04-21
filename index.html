@@ -324,7 +324,9 @@
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const query = this.value.toLowerCase().trim();
-                if (query === 'le prof1') {
+                if (query === 'o.m.n.i.s' || query === 'omnis') {
+                    window.location.href = 'omnis.html';
+                } else if (query === 'le prof1') {
                     window.location.href = 'secret.html';
                 } else if (query === 'herman') {
                     window.location.href = 'terminal.html';
